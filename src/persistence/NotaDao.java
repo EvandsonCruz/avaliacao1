@@ -16,7 +16,7 @@ public class NotaDao {
 	}
 	
 	public String procNota(Nota nota) throws SQLException {
-		String sql = "{CALL sp_inserenota(?,?,?,?)}";
+		String sql = "{CALL sp_inserenota(?,?,?,?,?)}";
 		CallableStatement cs = c.prepareCall(sql);
 		cs.setInt(1, nota.getIdEscola());
 		cs.setInt(2, nota.getIdQuesito());

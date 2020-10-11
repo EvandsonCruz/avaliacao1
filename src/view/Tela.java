@@ -7,7 +7,9 @@ import javax.swing.border.EmptyBorder;
 
 import controller.ControllerEscola;
 import controller.ControllerJurado;
+import controller.ControllerNota;
 import controller.ControllerQuesito;
+import model.Nota;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -33,7 +35,7 @@ public class Tela extends JFrame {
 	int contadorJurado = 0;
 	int contadorQuesito = 1;
 	Boolean primeiraInsercao = false;
-	
+	String saida;
 
 	/**
 	 * Launch the application.
@@ -161,45 +163,58 @@ public class Tela extends JFrame {
 		});
 		
 		btnInserir.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//ControllerNota cn = new ControllerNota(txtNota);
+			public void actionPerformed(ActionEvent e) {				
 				if(Double.parseDouble(txtNota.getText()) < 5.0 || Double.parseDouble(txtNota.getText()) > 10.0) {
 					lblAviso.setText("A nota deve ser entre 5.0 e 10.0");
 					lblAviso.setVisible(true);
 					
-				}else {
-					//cn.insereNota();
-					if(primeiraInsercao == false) {
-						for(int i=1; i<=8;i++) {
-		        			cbQuesito.addItem(nomeQuesitos[i]);
-		        		}
-						primeiraInsercao = true;
-					}
-					contadorEscola++;
-					cbEscola.setSelectedIndex(contadorEscola);
-					lblAviso.setVisible(false);
-					txtNota.setText("");
-					txtNota.grabFocus();
-					btnInserir.setEnabled(false);
-					if(contadorEscola >= 14) {
-						contadorEscola = 0;
-						contadorJurado++;
-						cbEscola.setSelectedIndex(contadorEscola);
-						cbJurado.setSelectedIndex(contadorJurado);
-					}
-					if(contadorJurado >= 5) {
-						contadorJurado = 0;
-						contadorQuesito++;
-						cbEscola.setSelectedIndex(contadorEscola);
-						cbJurado.setSelectedIndex(contadorJurado);
-						if(contadorQuesito >= 10) {
-							JOptionPane.showMessageDialog(null, "Já foram inseridas todas as notas de todos os jurados em todos os quesitos");
-							txtNota.setEnabled(false);
-							btnInserir.setEnabled(false);
-						}else {
-							cbQuesito.setSelectedIndex(contadorQuesito);
+				}else {					
+					try {
+						Nota nota = new Nota();
+						nota.setIdEscola(contadorEscola+1);
+						nota.setIdJurado(contadorJurado+1);
+						nota.setIdQuesito(contadorQuesito);
+						nota.setNota(txtNota.getText());
+						ControllerNota cn = new ControllerNota();
+						saida = cn.insereNota(nota);
+						System.out.println(saida);
+						if(primeiraInsercao == false) {
+							for(int i=1; i<=8;i++) {
+			        			cbQuesito.addItem(nomeQuesitos[i]);
+			        		}
+							primeiraInsercao = true;
 						}
+						contadorEscola++;
+						cbEscola.setSelectedIndex(contadorEscola);
+						lblAviso.setVisible(false);
+						txtNota.setText("");
+						txtNota.grabFocus();
+						btnInserir.setEnabled(false);
+						if(contadorEscola >= 14) {
+							contadorEscola = 0;
+							contadorJurado++;
+							cbEscola.setSelectedIndex(contadorEscola);
+							cbJurado.setSelectedIndex(contadorJurado);
+						}
+						if(contadorJurado >= 5) {
+							contadorJurado = 0;
+							contadorQuesito++;
+							cbEscola.setSelectedIndex(contadorEscola);
+							cbJurado.setSelectedIndex(contadorJurado);
+							if(contadorQuesito >= 10) {
+								JOptionPane.showMessageDialog(null, "Já foram inseridas todas as notas de todos os jurados em todos os quesitos");
+								txtNota.setEnabled(false);
+								btnInserir.setEnabled(false);
+							}else {
+								cbQuesito.setSelectedIndex(contadorQuesito);
+							}
+						}
+					} catch (ClassNotFoundException | SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
 					}
+					
+					
 				}
 			}
 		});
