@@ -103,10 +103,13 @@ public class Tela extends JFrame {
 		
 		ControllerEscola ce = new ControllerEscola();
 		String nomeEscolas[] = 	ce.listarNomeEscola();
+		int idEscolas[] = ce.listarIdEscola();
 		ControllerJurado cj = new ControllerJurado();
 		String nomeJurados[] = 	cj.listarNomeJurados();
+		int idJurados[] = cj.listarIdJurado();
 		ControllerQuesito cq = new ControllerQuesito();
 		String nomeQuesitos[] = cq.listarNomeQuesitos();
+		int idQuesitos[] = cq.listarIdQuesito();
 						
 		JComboBox<String> cbQuesito = new JComboBox<String>();
 		cbQuesito.setBounds(103, 136, 176, 22);
@@ -171,9 +174,9 @@ public class Tela extends JFrame {
 				}else {					
 					try {
 						Nota nota = new Nota();
-						nota.setIdEscola(contadorEscola+1);
-						nota.setIdJurado(contadorJurado+1);
-						nota.setIdQuesito(contadorQuesito);
+						nota.setIdEscola(idEscolas[contadorEscola]);
+						nota.setIdJurado(idJurados[contadorJurado]);
+						nota.setIdQuesito(idQuesitos[contadorQuesito-1]);
 						nota.setNota(txtNota.getText());
 						ControllerNota cn = new ControllerNota();
 						saida = cn.insereNota(nota);

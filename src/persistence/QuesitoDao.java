@@ -31,4 +31,20 @@ public class QuesitoDao {
 		ps.close();
 		return listaNomeQuesitos;
 	}
+	
+	public List<Quesito> listarIdQuesito() throws SQLException {
+		List<Quesito> listaIdQuesito = new ArrayList<Quesito>();
+		String sql = "select id from quesito";
+		PreparedStatement ps = c.prepareStatement(sql);
+		ResultSet rs = ps.executeQuery();
+		while(rs.next()) {
+			Quesito que = new Quesito();
+			que.setId(rs.getInt("id"));
+			listaIdQuesito.add(que);
+		}		
+		
+		rs.close();
+		ps.close();
+		return listaIdQuesito;
+	}
 }

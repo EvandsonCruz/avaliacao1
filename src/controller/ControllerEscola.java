@@ -22,7 +22,6 @@ public class ControllerEscola {
 		    i++;
 		}
 		JOptionPane.showMessageDialog(null, escolas, "                           Classificação Escolas de Samba 2013", -1);			
-		//txtNota.setText("");
 	}
 	
 	public String[] listarNomeEscola() throws SQLException, ClassNotFoundException {	
@@ -34,8 +33,18 @@ public class ControllerEscola {
 		    nomeEscolas[i] = e.getNome();
 		    i++;
 		}			
-		
 		return nomeEscolas;
-		//txtNota.setText("");
+	}
+	
+	public int[] listarIdEscola() throws SQLException, ClassNotFoundException {	
+		int i = 0;
+		EscolaDao eDao = new EscolaDao();
+		List<Escola> listaEscola = eDao.listarIdEscola();
+		int idEscolas[] = new int[14];		
+		for (Escola e : listaEscola){ 
+		    idEscolas[i] = e.getId();
+		    i++;
+		}			
+		return idEscolas;
 	}
 }

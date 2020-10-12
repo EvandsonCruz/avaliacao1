@@ -19,8 +19,8 @@ public class NotaDao {
 		String sql = "{CALL sp_inserenota(?,?,?,?,?)}";
 		CallableStatement cs = c.prepareCall(sql);
 		cs.setInt(1, nota.getIdEscola());
-		cs.setInt(2, nota.getIdQuesito());
-		cs.setInt(3, nota.getIdJurado());
+		cs.setInt(2, nota.getIdJurado());
+		cs.setInt(3, nota.getIdQuesito());		
 		cs.setString(4, nota.getNota());
 		cs.registerOutParameter(5,Types.VARCHAR);
 		cs.execute();

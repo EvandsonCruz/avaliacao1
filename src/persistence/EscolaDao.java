@@ -51,5 +51,21 @@ private Connection c;
 		ps.close();
 		return listaNomeEscolas;
 	}
+	
+	public List<Escola> listarIdEscola() throws SQLException {
+		List<Escola> listaIdEscolas = new ArrayList<Escola>();
+		String sql = "select id from escola";
+		PreparedStatement ps = c.prepareStatement(sql);
+		ResultSet rs = ps.executeQuery();
+		while(rs.next()) {
+			Escola esc = new Escola();
+			esc.setId(rs.getInt("id"));
+			listaIdEscolas.add(esc);
+		}		
+		
+		rs.close();
+		ps.close();
+		return listaIdEscolas;
+	}
 
 }

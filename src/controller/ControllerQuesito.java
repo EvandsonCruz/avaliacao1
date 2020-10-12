@@ -18,6 +18,17 @@ public class ControllerQuesito {
 		}			
 		
 		return nomeQuesitos;
-		//txtNota.setText("");
+	}
+	
+	public int[] listarIdQuesito() throws SQLException, ClassNotFoundException {	
+		int i = 0;
+		QuesitoDao qDao = new QuesitoDao();
+		List<Quesito> listaQuesito = qDao.listarIdQuesito();
+		int idQuesito[] = new int[9];		
+		for (Quesito q : listaQuesito){ 
+		    idQuesito[i] = q.getId();
+		    i++;
+		}			
+		return idQuesito;
 	}
 }

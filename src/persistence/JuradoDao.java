@@ -31,4 +31,20 @@ public class JuradoDao {
 		ps.close();
 		return listaNomeJurados;
 	}
+	
+	public List<Jurado> listarIdJurado() throws SQLException {
+		List<Jurado> listaIdJurados = new ArrayList<Jurado>();
+		String sql = "select id from jurado";
+		PreparedStatement ps = c.prepareStatement(sql);
+		ResultSet rs = ps.executeQuery();
+		while(rs.next()) {
+			Jurado jur = new Jurado();
+			jur.setId(rs.getInt("id"));
+			listaIdJurados.add(jur);
+		}		
+		
+		rs.close();
+		ps.close();
+		return listaIdJurados;
+	}
 }
