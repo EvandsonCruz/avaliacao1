@@ -36,6 +36,9 @@ public class Tela extends JFrame {
 	int contadorQuesito = 1;
 	Boolean primeiraInsercao = false;
 	String saida;
+	ControllerQuesito cq = new ControllerQuesito();
+	String nomeQuesitos[] = cq.listarNomeQuesitos();
+	int idQuesitos[] = cq.listarIdQuesito();
 
 	/**
 	 * Launch the application.
@@ -107,9 +110,7 @@ public class Tela extends JFrame {
 		ControllerJurado cj = new ControllerJurado();
 		String nomeJurados[] = 	cj.listarNomeJurados();
 		int idJurados[] = cj.listarIdJurado();
-		ControllerQuesito cq = new ControllerQuesito();
-		String nomeQuesitos[] = cq.listarNomeQuesitos();
-		int idQuesitos[] = cq.listarIdQuesito();
+		
 						
 		JComboBox<String> cbQuesito = new JComboBox<String>();
 		cbQuesito.setBounds(103, 136, 176, 22);
@@ -117,8 +118,25 @@ public class Tela extends JFrame {
 		cbQuesito.addItem("");
 		cbQuesito.addItem(nomeQuesitos[0]);	
 		
+		JButton btnQuesito = new JButton("Ver Quesito");
+		btnQuesito.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ControllerNota cn = new ControllerNota();
+				try {
+					cn.listaNotaQuesito(contadorQuesito, nomeQuesitos);
+				} catch (ClassNotFoundException | SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnQuesito.setEnabled(false);
+		btnQuesito.setBounds(328, 136, 114, 23);
+		contentPane.add(btnQuesito);
+		
 		cbQuesito.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
+            	btnQuesito.setEnabled(true);
                 cbQuesito.setEnabled(false);
                 for(int i=0; i<=13;i++) {
                 	cbEscola.addItem((nomeEscolas[i]));
@@ -132,7 +150,7 @@ public class Tela extends JFrame {
 		
 		JLabel lblAviso = new JLabel("");
 		lblAviso.setForeground(Color.RED);
-		lblAviso.setBounds(103, 205, 203, 14);
+		lblAviso.setBounds(103, 205, 339, 14);
 		contentPane.add(lblAviso);
 		lblAviso.setVisible(false);
 		
@@ -150,11 +168,21 @@ public class Tela extends JFrame {
 							lblAviso.setText("A nota deve ser entre 5.0 e 10.0");
 							lblAviso.setVisible(true);
 							btnInserir.setEnabled(false);
+						}
 							
-						}else {
-							lblAviso.setVisible(false);
-							btnInserir.setEnabled(true);
-							btnInserir.grabFocus();
+						else {
+							if(Double.parseDouble(txtNota.getText()) != 5.0 && Double.parseDouble(txtNota.getText()) != 6.0 &&
+									Double.parseDouble(txtNota.getText()) != 7.0 && Double.parseDouble(txtNota.getText()) != 8.0 &&
+									Double.parseDouble(txtNota.getText()) != 9.0 && Double.parseDouble(txtNota.getText()) != 10.0) {
+								lblAviso.setText("A nota deve ser 5.0, 6.0, 7.0, 8.0, 9.0 ou 10.0");
+								lblAviso.setVisible(true);
+								btnInserir.setEnabled(false);
+								
+							}else {
+								lblAviso.setVisible(false);
+								btnInserir.setEnabled(true);
+								btnInserir.grabFocus();
+							}
 						}
 					}catch(NumberFormatException f) {
 						btnInserir.setEnabled(false);
@@ -221,13 +249,10 @@ public class Tela extends JFrame {
 				}
 			}
 		});
+		
 		btnInserir.setBounds(190, 180, 89, 23);
 		contentPane.add(btnInserir);
-		
-		JButton btnQuesito = new JButton("Ver Quesito");
-		btnQuesito.setBounds(328, 136, 114, 23);
-		contentPane.add(btnQuesito);
-		
+				
 		JButton btnTotal = new JButton("Ver Total");
 		btnTotal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

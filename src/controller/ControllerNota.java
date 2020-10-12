@@ -1,8 +1,12 @@
 package controller;
 
 import java.sql.SQLException;
+import java.util.List;
+
+import javax.swing.JOptionPane;
 
 import model.Nota;
+import model.NotaQuesito;
 import persistence.NotaDao;
 
 public class ControllerNota{
@@ -28,12 +32,28 @@ public class ControllerNota{
 //		}		
 //	}
 	
-	public String insereNota(Nota nota) throws SQLException, ClassNotFoundException {
-		
+	public String insereNota(Nota nota) throws SQLException, ClassNotFoundException {		
 		NotaDao nDao = new NotaDao();
 		String saida = nDao.procNota(nota);
-		return saida;
-		
+		return saida;		
 	}
-
+	
+	public void listaNotaQuesito(int contadorQuesito, String nomeQuesitos[]) throws ClassNotFoundException, SQLException {
+		int i = 0;
+		NotaDao nDao = new NotaDao();
+		List<NotaQuesito> listaNotaQuesito = nDao.listaNotaQuesito(contadorQuesito);
+		String notaQuesito="";		
+		for (NotaQuesito nq : listaNotaQuesito){ 
+		    notaQuesito += nq.getNomeEscola() + ": " +  
+		    		       "Nota: " + nq.getNota() + " || ";
+		    		       if(i == 4) {
+		    		    	   notaQuesito += "\n\n";
+		    		    	   i = 0;
+		    		       }
+		   i++;
+		}
+		JOptionPane.showMessageDialog(null, notaQuesito, "Notas quesito " + nomeQuesitos[contadorQuesito-1] + " ", -1);
+	}
 }
+
+
