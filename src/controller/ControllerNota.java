@@ -4,6 +4,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 import model.Nota;
 import model.NotaQuesito;
@@ -39,20 +42,28 @@ public class ControllerNota{
 	}
 	
 	public void listaNotaQuesito(int contadorQuesito, String nomeQuesitos[]) throws ClassNotFoundException, SQLException {
-		int i = 0;
+		//int i = 0;
 		NotaDao nDao = new NotaDao();
 		List<NotaQuesito> listaNotaQuesito = nDao.listaNotaQuesito(contadorQuesito);
-		String notaQuesito="";		
-		for (NotaQuesito nq : listaNotaQuesito){ 
-		    notaQuesito += nq.getNomeEscola() + ": " +  
-		    		       "Nota: " + nq.getNota() + " || ";
-		    		       if(i == 4) {
-		    		    	   notaQuesito += "\n\n";
-		    		    	   i = 0;
-		    		       }
-		   i++;
+//		String notaQuesito="";		
+//		for (NotaQuesito nq : listaNotaQuesito){ 
+//		    notaQuesito += nq.getNomeEscola() + ": " +  
+//		    		       "Nota: " + nq.getNota() + " || ";
+//		    		       if(i == 4) {
+//		    		    	   notaQuesito += "\n\n";
+//		    		    	   i = 0;
+//		    		       }
+//		   i++;
+//		}
+//		JOptionPane.showMessageDialog(null, notaQuesito, "Notas quesito " + nomeQuesitos[contadorQuesito-1] + " ", -1);
+		String col[] = { "ESCOLA", "NOTA"};
+		DefaultTableModel tableModel = new DefaultTableModel(col, 0);
+		for (NotaQuesito nq : listaNotaQuesito) {
+			Object[] notas = { nq.getNomeEscola(),nq.getNota()};
+			tableModel.addRow(notas);			
 		}
-		JOptionPane.showMessageDialog(null, notaQuesito, "Notas quesito " + nomeQuesitos[contadorQuesito-1] + " ", -1);
+		JTable table = new JTable(tableModel);
+		JOptionPane.showMessageDialog(null, new JScrollPane(table), "Notas quesito " + nomeQuesitos[contadorQuesito-1], JOptionPane.PLAIN_MESSAGE);
 	}
 }
 
