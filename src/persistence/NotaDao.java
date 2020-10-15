@@ -37,7 +37,7 @@ public class NotaDao {
 	
 	public List<NotaQuesito> listaNotaQuesito(int contadorQuesito) throws SQLException {
 		List<NotaQuesito> listaNotaQuesito = new ArrayList<NotaQuesito>();
-		String sql = "select e.nome,q.nome,nota from nota \r\n"
+		String sql = "select e.nome,q.nome,nota1,nota2,nota3,nota4,nota5,maior,menor,total_quesito from nota2 \r\n"
 				+ "join escola e\r\n"
 				+ "on e.id = id_escola\r\n"
 				+ "join quesito q\r\n"
@@ -48,7 +48,7 @@ public class NotaDao {
 		while(rs.next()) {
 			NotaQuesito nq = new NotaQuesito();
 			nq.setNomeEscola(rs.getString("nome"));
-			nq.setNota(rs.getString("nota"));
+			nq.setNota(rs.getString("nota1"));
 			listaNotaQuesito.add(nq);
 		}		
 		
