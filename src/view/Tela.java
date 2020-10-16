@@ -125,7 +125,6 @@ public class Tela extends JFrame {
 				try {
 					cn.listaNotaQuesito(contadorQuesito, nomeQuesitos);
 				} catch (ClassNotFoundException | SQLException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
@@ -200,50 +199,51 @@ public class Tela extends JFrame {
 					lblAviso.setVisible(true);
 					
 				}else {					
-					try {
-						Nota nota = new Nota();
-						nota.setIdEscola(idEscolas[contadorEscola]);
-						nota.setIdJurado(idJurados[contadorJurado]);
-						nota.setIdQuesito(idQuesitos[contadorQuesito-1]);
-						nota.setNota(txtNota.getText());
-						ControllerNota cn = new ControllerNota();
-						saida = cn.insereNota(nota);
-						System.out.println(saida);
-						if(primeiraInsercao == false) {
-							for(int i=1; i<=8;i++) {
-			        			cbQuesito.addItem(nomeQuesitos[i]);
-			        		}
-							primeiraInsercao = true;
-						}
-						contadorEscola++;
-						cbEscola.setSelectedIndex(contadorEscola);
-						lblAviso.setVisible(false);
-						txtNota.setText("");
-						txtNota.grabFocus();
-						btnInserir.setEnabled(false);
-						if(contadorEscola >= 14) {
-							contadorEscola = 0;
-							contadorJurado++;
-							cbEscola.setSelectedIndex(contadorEscola);
-							cbJurado.setSelectedIndex(contadorJurado);
-						}
-						if(contadorJurado >= 5) {
-							contadorJurado = 0;
-							contadorQuesito++;
-							cbEscola.setSelectedIndex(contadorEscola);
-							cbJurado.setSelectedIndex(contadorJurado);
-							if(contadorQuesito >= 10) {
-								JOptionPane.showMessageDialog(null, "Já foram inseridas todas as notas de todos os jurados em todos os quesitos");
-								txtNota.setEnabled(false);
-								btnInserir.setEnabled(false);
-							}else {
-								cbQuesito.setSelectedIndex(contadorQuesito);
-							}
-						}
-					} catch (ClassNotFoundException | SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+											Nota nota = new Nota();
+											nota.setIdEscola(idEscolas[contadorEscola]);
+											nota.setIdJurado(idJurados[contadorJurado]);
+											nota.setIdQuesito(idQuesitos[contadorQuesito-1]);
+											nota.setNota(txtNota.getText());
+											ControllerNota cn = new ControllerNota();
+											try {
+												saida = cn.insereNota(nota);
+											} catch (ClassNotFoundException | SQLException e1) {
+												// TODO Auto-generated catch block
+												e1.printStackTrace();
+											}
+											System.out.println(saida);
+											if(primeiraInsercao == false) {
+												for(int i=1; i<=8;i++) {
+								        			cbQuesito.addItem(nomeQuesitos[i]);
+								        		}
+												primeiraInsercao = true;
+											}
+											contadorEscola++;
+											cbEscola.setSelectedIndex(contadorEscola);
+											lblAviso.setVisible(false);
+											txtNota.setText("");
+											txtNota.grabFocus();
+											btnInserir.setEnabled(false);
+											if(contadorEscola >= 14) {
+												contadorEscola = 0;
+												contadorJurado++;
+												cbEscola.setSelectedIndex(contadorEscola);
+												cbJurado.setSelectedIndex(contadorJurado);
+											}
+											if(contadorJurado >= 5) {
+												contadorJurado = 0;
+												contadorQuesito++;
+												cbEscola.setSelectedIndex(contadorEscola);
+												cbJurado.setSelectedIndex(contadorJurado);
+												if(contadorQuesito >= 10) {
+													cbQuesito.setEnabled(false);
+													JOptionPane.showMessageDialog(null, "Já foram inseridas todas as notas de todos os jurados em todos os quesitos");
+													txtNota.setEnabled(false);
+													btnInserir.setEnabled(false);
+												}else {
+													cbQuesito.setSelectedIndex(contadorQuesito);
+												}
+											}
 					
 					
 				}
@@ -260,7 +260,6 @@ public class Tela extends JFrame {
 				try {
 					ce.listarEscola();
 				} catch (ClassNotFoundException | SQLException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}

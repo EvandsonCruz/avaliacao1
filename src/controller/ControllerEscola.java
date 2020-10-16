@@ -18,10 +18,10 @@ public class ControllerEscola {
 		    escolas += 	   i + "° Colocado -    "	+ "Id: " + e.getId() + ", " + 
 		    		       "Nome: " + e.getNome() + ", " + 
 		    		       "Total: " + e.getTotal() + "\n" +
-		                   "--------------------------------------------------------------------------------------------\n";	
+		                   "--------------------------------------------------------------------------------------------------\n";	
 		    i++;
 		}
-		JOptionPane.showMessageDialog(null, escolas, "                           Classificação Escolas de Samba 2013", -1);			
+		JOptionPane.showMessageDialog(null, escolas, "                               Classificação Escolas de Samba 2013", -1);			
 	}
 	
 	public String[] listarNomeEscola() throws SQLException, ClassNotFoundException {	
